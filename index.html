@@ -1,11 +1,59 @@
-<html>
+<!DOCTYPE html>
+<html lang="hu">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pénz</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
 </head>
 <body>
-<p>la-la-la-lava ch-ch-ch-chicken</p>
-<p>steve's lava chicken yeah it's tasty as hell</p>
-<p>oh mamacita now you're ringing the bell</p>
-<p>crispy and juicy now you're having a snack</p>
-<p>oh super spicy it's a lava attack</p>
+  <div id="loading-screen">
+    <img src="assets/troll.webp" alt="Betöltés...">
+  </div>
+
+  <div class="container">
+    <header>
+      <h1>❤️❤️ tánarurnák szrertettel ❤️❤️</h1>
+      <div class="controls">
+        <select id="crypto-select">
+          <option value="BTCUSDT">Bitcoin (BTC)</option>
+          <option value="ETHUSDT">Ethereum (ETH)</option>
+          <option value="BNBUSDT">Binance Coin (BNB)</option>
+          <option value="SOLUSDT">Solana (SOL)</option>
+          <option value="ADAUSDT">Cardano (ADA)</option>
+          <option value="DOTUSDT">Polkadot (DOT)</option>
+          <option value="DOGEUSDT">Dogecoin (DOGE)</option>
+          <option value="LTCUSDT">Litecoin (LTC)</option>
+        </select>
+        <div class="interval-buttons">
+          <button data-interval="1m">1 perc</button>
+          <button data-interval="5m">5 perc</button>
+          <button data-interval="1h">1 óra</button>
+          <button data-interval="1d">1 nap</button>
+          <button data-interval="1w">1 hét</button>
+          <button data-interval="1M">1 hónap</button>
+        </div>
+        <div class="currency-toggle">
+          <button id="currency-usd" class="active">USD</button>
+          <button id="currency-huf">HUF</button>
+        </div>
+      </div>
+    </header>
+    <main>
+      <div class="crypto-info">
+        <div class="crypto-icon">
+          <img id="crypto-icon" src="https://assets.coingecko.com/coins/images/1/small/bitcoin.png" alt="Kripto Ikon">
+        </div>
+        <div class="crypto-price">
+          <h2 id="crypto-name">Bitcoin (BTC)</h2>
+          <p id="crypto-price">Betöltés...</p>
+        </div>
+      </div>
+      <canvas id="price-chart"></canvas>
+    </main>
+  </div>
+  <script src="js/script.js"></script>
 </body>
 </html>
