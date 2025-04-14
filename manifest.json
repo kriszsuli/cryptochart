@@ -9,8 +9,7 @@
     "start_url": "https://susu.liba.lol/cryptochart",
     "icons": [
         {
-            "src": "https://susu.liba.lol/cryptochart/assets/icon.png",
-            "purpose": "monochrome maskable",
+            "src": "assets/icon.png",
             "sizes": "430x430",
             "type": "image/png"
         }
