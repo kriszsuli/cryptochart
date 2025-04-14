@@ -1,0 +1,18 @@
+{
+    "name": "Real-time Crypto Chart",
+    "short_name": "CryptoC",
+    "theme_color": "#00ffaa",
+    "background_color": "#121212",
+    "display": "standalone",
+    "orientation": "portrait",
+    "scope": "https://susu.liba.lol/cryptochart",
+    "start_url": "https://susu.liba.lol/cryptochart",
+    "icons": [
+        {
+            "src": "assets/icon.png",
+            "purpose": "monochrome maskable",
+            "sizes": "430x430",
+            "type": "image/png"
+        }
+    ]
+}
