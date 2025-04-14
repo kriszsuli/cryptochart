@@ -87,6 +87,10 @@ function updateCryptoIcon(crypto) {
     DOTUSDT: 'https://assets.coingecko.com/coins/images/12171/small/polkadot.png',
     DOGEUSDT: 'https://assets.coingecko.com/coins/images/5/small/dogecoin.png',
     LTCUSDT: 'https://assets.coingecko.com/coins/images/2/small/litecoin.png',
+    PEPEUSDT: 'https://assets.coingecko.com/coins/images/29850/standard/pepe-token.jpeg?1696528776',
+    NOTUSDT: 'https://assets.coingecko.com/coins/images/33453/standard/rFmThDiD_400x400.jpg?1701876350',
+    LUNCUSDT: 'https://assets.coingecko.com/coins/images/15861/standard/abracadabra-3.png?1696515477',
+    SPELLUSDT: 'https://assets.coingecko.com/coins/images/8284/standard/01_LunaClassic_color.png?1696508486',
   };
   cryptoIcon.src = icons[crypto] || 'https://via.placeholder.com/60'; // Placeholder ha nincs ikon ❤️
   cryptoName.textContent = crypto.split('USDT')[0]; // Kripto név megjelenítése ❤️
