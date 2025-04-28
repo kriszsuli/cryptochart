@@ -7,7 +7,7 @@ const cryptoName = document.getElementById('crypto-name'); // Kripto neve ❤️
 const cryptoPrice = document.getElementById('crypto-price'); // Jelenlegi ár ❤️
 const priceChartCanvas = document.getElementById('price-chart'); // Diagram canvas ❤️
 const priceChart = priceChartCanvas.getContext('2d'); // Canvas rajzoló kontextus ❤️
- 
+
 // Globális változók inicializálása ❤️
 let currentCrypto = 'BTCUSDT'; // Alapértelmezett kriptovaluta ❤️
 let currentInterval = '1m'; // Alapértelmezett időintervallum ❤️
@@ -107,17 +107,29 @@ function formatTimestamp(timestamp) {
 
 // Ár konvertálása a kiválasztott valutára ❤️
 function convertPrice(price) {
-  if (currentCurrency === 'HUF') {
-    return (price * usdtToHufRate).toFixed(2); // HUF-ra konvertálás ❤️
+  // Kriptovaluta kódja alapján ellenőrizzük, hogy melyik valuta érintett
+  const highPrecisionCoins = ['SPELLUSDT', 'LUNCUSDT', 'NOTUSDT', 'PEPEUSDT'];
+
+  if (highPrecisionCoins.includes(currentCrypto)) {
+    // Ha az érintett valuta, akkor 10 tizedesjegyig formázzuk
+    if (currentCurrency === 'HUF') {
+      return (price * usdtToHufRate).toFixed(10); // HUF-ra konvertálás, 10 tizedesjegy
+    }
+    return price.toFixed(10); // USD esetén 10 tizedesjegy
+  } else {
+    // Minden más valuta marad a régi formázáson
+    if (currentCurrency === 'HUF') {
+      return (price * usdtToHufRate).toFixed(2); // HUF-ra konvertálás, 2 tizedesjegy
+    }
+    return price.toFixed(2); // USD esetén 2 tizedesjegy
   }
-  return price.toFixed(2); // USD esetén kerekítés ❤️
 }
 
 // USDT-HUF átváltási arány lekérése ❤️
 async function fetchUsdtToHufRate() {
   try {
     const response = await axios.get('https://api.exchangerate-api.com/v4/latest/USD');
-    const usdToHuf = response.data.rates.HUF; // USD-HUF árf olyam ❤️
+    const usdToHuf = response.data.rates.HUF; // USD-HUF árfolyam ❤️
     usdtToHufRate = usdToHuf; // Átváltási arány beállítása ❤️
   } catch (error) {
     console.error('Hiba az USDT-HUF árfolyam lekérése közben:', error);
@@ -168,23 +180,22 @@ currencyButtons.forEach((button) => {
   });
 });
 
-
 // Betöltő kép eltüntetése ❤️
 function hideLoadingScreen() {
-    const loadingScreen = document.getElementById('loading-screen');
-    setTimeout(() => {
-      loadingScreen.classList.add('hidden'); // Elrejtjük a betöltő képet ❤️
-    }, 100); // 0.1 másodperc múlva ❤️
-  }
-  
-  // Kezdeti betöltés ❤️
-  fetchUsdtToHufRate().then(() => {
-    updateCryptoIcon(currentCrypto); // Ikon beállítása ❤️
-    updateCryptoPrice(currentCrypto); // Ár beállítása ❤️
-    fetchCryptoData(currentCrypto, currentInterval).then(initChart); // Diagram inicializálása ❤️
-    startAutoUpdate(); // Automatikus frissítés indítása ❤️
-    startRealTimePriceUpdate(); // Valós idejű frissítés indítása ❤️
-  
-    // Betöltő kép eltüntetése ❤️
-    hideLoadingScreen();
-  });
+  const loadingScreen = document.getElementById('loading-screen');
+  setTimeout(() => {
+    loadingScreen.classList.add('hidden'); // Elrejtjük a betöltő képet ❤️
+  }, 100); // 0.1 másodperc múlva ❤️
+}
+
+// Kezdeti betöltés ❤️
+fetchUsdtToHufRate().then(() => {
+  updateCryptoIcon(currentCrypto); // Ikon beállítása ❤️
+  updateCryptoPrice(currentCrypto); // Ár beállítása ❤️
+  fetchCryptoData(currentCrypto, currentInterval).then(initChart); // Diagram inicializálása ❤️
+  startAutoUpdate(); // Automatikus frissítés indítása ❤️
+  startRealTimePriceUpdate(); // Valós idejű frissítés indítása ❤️
+
+  // Betöltő kép eltüntetése ❤️
+  hideLoadingScreen();
+});
