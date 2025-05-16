@@ -16,9 +16,40 @@ let chart; // Chart.js példány tárolása ❤️
 let usdtToHufRate = 1; // USDT-HUF átváltási arány ❤️
 let updateIntervalId; // Automatikus frissítés időzítője ❤️
 
+// Calculate and display price statistics
+function updatePriceStats(data) {
+  if (!data || data.length === 0) return;
+
+  const prices = data.map(item => item[1]);
+  const minPrice = Math.min(...prices);
+  const maxPrice = Math.max(...prices);
+  
+  // Calculate percentage change (first price vs last price)
+  const firstPrice = prices[0];
+  const lastPrice = prices[prices.length - 1];
+  const percentageChange = ((lastPrice - firstPrice) / firstPrice) * 100;
+
+  // Update DOM elements
+  document.getElementById('min-price').textContent = `${convertPrice(minPrice)} ${currentCurrency}`;
+  document.getElementById('max-price').textContent = `${convertPrice(maxPrice)} ${currentCurrency}`;
+  
+  const changeElement = document.getElementById('price-change');
+  changeElement.textContent = `${percentageChange.toFixed(2)}%`;
+  
+  // Set color based on positive/negative change
+  if (percentageChange >= 0) {
+    changeElement.style.color = '#00ffaa'; // Green for positive
+  } else {
+    changeElement.style.color = '#ff5555'; // Red for negative
+  }
+}
+
 // Diagram inicializálása ❤️
 function initChart(data) {
   if (chart) chart.destroy(); // Töröljük a régi diagramot, ha létezik❤️
+
+  // Update price statistics
+  updatePriceStats(data);
 
   // Új diagram létrehozása ❤️
   chart = new Chart(priceChart, {
@@ -175,7 +206,10 @@ currencyButtons.forEach((button) => {
     currencyButtons.forEach((btn) => btn.classList.remove('active')); // Aktív gomb eltávolítása ❤️
     button.classList.add('active'); // Új aktív gomb beállítása ❤️
     currentCurrency = button.id.split('-')[1].toUpperCase(); // Kiválasztott valuta ❤️
-    fetchCryptoData(currentCrypto, currentInterval).then(initChart); // Diagram frissítése ❤️ 
+    fetchCryptoData(currentCrypto, currentInterval).then((data) => {
+      initChart(data);
+      updatePriceStats(data);
+    });
     updateCryptoPrice(currentCrypto); // Ár frissítése ❤️
   });
 });
